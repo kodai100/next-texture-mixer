@@ -1,5 +1,6 @@
 import * as WebGLUtil from "./WebGLUtil";
 import * as MinMatrix from "./MinMatrix";
+import { Data } from "~/constants/DataStructure";
 
 export class ImageProcess {
 
@@ -16,7 +17,7 @@ export class ImageProcess {
         this.webglUtil = new WebGLUtil.WebGLUtil(this.gl);
     }
 
-    draw = (data: WebGLUtil.Data) => {
+    draw = (data: Data) => {
 
         this.gl.clearColor(0.0, 0.0, 0.0, 0.0);
         this.gl.disable(this.gl.DEPTH_TEST);
@@ -26,10 +27,9 @@ export class ImageProcess {
         this.gl.blendFunc(this.gl.SRC_ALPHA, this.gl.ONE_MINUS_SRC_ALPHA);
     
         this.generateDrawableRect(data);
-        
     }
 
-    generateDrawableRect = async (data: WebGLUtil.Data) => {
+    generateDrawableRect = async (data: Data) => {
 
         let v_shader = this.webglUtil.createShader('vs', data);
         let f_shader = this.webglUtil.createShader('fs', data);

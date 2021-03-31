@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Fullscreen } from '~/components/FullScreen';
 import styled from 'styled-components';
 import { InputNode } from '~/components/InputNode';
@@ -9,7 +9,7 @@ import { TextButton } from '~/components/TextButton';
 
 import { makeId } from '~/lib/MakeGUID';
 import { IconButton } from '~/components/IconButton';
-import { Channel, Data } from '~/lib/WebGLUtil';
+import { Channel, Data, ImageSetting } from '~/constants/DataStructure';
 
 export const AppScreen = () => {
 
@@ -18,34 +18,31 @@ export const AppScreen = () => {
     const [imageB, setImageB] = useState("");
     const [imageA, setImageA] = useState("");
 
-    const [imageRChannel, setImageRChannel] = useState<Channel>("r");
-    const [imageGChannel, setImageGChannel] = useState<Channel>("r");
-    const [imageBChannel, setImageBChannel] = useState<Channel>("r");
-    const [imageAChannel, setImageAChannel] = useState<Channel>("r");
+    const [rChannel, setRChannel] = useState<Channel>("r");
+    const [gChannel, setGChannel] = useState<Channel>("r");
+    const [bChannel, setBChannel] = useState<Channel>("r");
+    const [aChannel, setAChannel] = useState<Channel>("r");
+
+    const [settingR, setSettingR] = useState<ImageSetting>({invert:false,white:false});
+    const [settingG, setSettingG] = useState<ImageSetting>({invert:false,white:false});
+    const [settingB, setSettingB] = useState<ImageSetting>({invert:false,white:false});
+    const [settingA, setSettingA] = useState<ImageSetting>({invert:false,white:false});
     
     const [mix, setMix] = useState("");
 
     const data = () : Data => {
         return (
             {
-                r: {
-                    fileName: imageR,
-                    selectedChannel: imageRChannel
-                },
-                g: {
-                    fileName: imageG,
-                    selectedChannel: imageGChannel
-                },
-                b: {
-                    fileName: imageB,
-                    selectedChannel: imageBChannel
-                },
-                a: {
-                    fileName: imageA,
-                    selectedChannel: imageAChannel
-                }
+                r: { fileName: imageR, selectedChannel: rChannel, setting: settingR },
+                g: { fileName: imageG, selectedChannel: gChannel, setting: settingG },
+                b: { fileName: imageB, selectedChannel: bChannel, setting: settingB },
+                a: { fileName: imageA, selectedChannel: aChannel, setting: settingA }
             }
         )
+    }
+
+    const clearImages = () => {
+        setImageR(""); setImageG(""); setImageB(""); setImageA("");
     }
 
     return (
@@ -54,13 +51,11 @@ export const AppScreen = () => {
             <Container>
                 <FlexContainer>
                     <InputContainer>
-                        <InputNode label="R" imageBlob={imageR} onSetImage={(imageBlob) => setImageR(imageBlob)} onSetChannel={(id) => setImageRChannel(id)}></InputNode>
-                        <InputNode label="G" imageBlob={imageG} onSetImage={(imageBlob) => setImageG(imageBlob)} onSetChannel={(id) => setImageGChannel(id)}></InputNode>
-                        <InputNode label="B" imageBlob={imageB} onSetImage={(imageBlob) => setImageB(imageBlob)} onSetChannel={(id) => setImageBChannel(id)}></InputNode>
-                        <InputNode label="A" imageBlob={imageA} onSetImage={(imageBlob) => setImageA(imageBlob)} onSetChannel={(id) => setImageAChannel(id)}></InputNode>
-                        <StyledTextButton label="Clear All" onClick={() => {
-                            setImageR(""); setImageG(""); setImageB(""); setImageA("");
-                        }}></StyledTextButton>
+                        <InputNode label="R" imageBlob={imageR} onSetImage={(imageBlob) => setImageR(imageBlob)} onSetChannel={(id) => setRChannel(id)} onSetSetting={(setting)=>setSettingR(setting)}></InputNode>
+                        <InputNode label="G" imageBlob={imageG} onSetImage={(imageBlob) => setImageG(imageBlob)} onSetChannel={(id) => setGChannel(id)} onSetSetting={(setting)=>setSettingG(setting)}></InputNode>
+                        <InputNode label="B" imageBlob={imageB} onSetImage={(imageBlob) => setImageB(imageBlob)} onSetChannel={(id) => setBChannel(id)} onSetSetting={(setting)=>setSettingB(setting)}></InputNode>
+                        <InputNode label="A" imageBlob={imageA} onSetImage={(imageBlob) => setImageA(imageBlob)} onSetChannel={(id) => setAChannel(id)} onSetSetting={(setting)=>setSettingA(setting)}></InputNode>
+                        <StyledTextButton label="Clear All" onClick={() => {clearImages()}}></StyledTextButton>
                     </InputContainer>
                     <MixButtonCentered onClick={() => {setMix(makeId(5))}}></MixButtonCentered>
                     <OutputContainer>

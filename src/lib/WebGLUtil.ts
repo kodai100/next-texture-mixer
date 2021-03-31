@@ -1,16 +1,4 @@
-export type Channel = "r" | "g" | "b" | "a";
-
-export type FileChannelPair = {
-    fileName: string;
-    selectedChannel: Channel;
-}
-
-export type Data = {
-    r : FileChannelPair;
-    g : FileChannelPair;
-    b : FileChannelPair;
-    a : FileChannelPair;
-}
+import { Data } from "~/constants/DataStructure";
 
 export class WebGLUtil {
 
@@ -112,10 +100,16 @@ export class WebGLUtil {
             varying vec2      vTextureCoord;
             
             void main(void){
-                float r = texture2D(texture01, vTextureCoord).${data.r.selectedChannel};
-                float g = texture2D(texture02, vTextureCoord).${data.g.selectedChannel};
-                float b = texture2D(texture03, vTextureCoord).${data.b.selectedChannel};
-                float a = texture2D(texture04, vTextureCoord).${data.a.selectedChannel};
+                float r = ${data.r.setting.invert?"1.-":""}texture2D(texture01, vTextureCoord).${data.r.selectedChannel};
+                float g = ${data.g.setting.invert?"1.-":""}texture2D(texture02, vTextureCoord).${data.g.selectedChannel};
+                float b = ${data.b.setting.invert?"1.-":""}texture2D(texture03, vTextureCoord).${data.b.selectedChannel};
+                float a = ${data.a.setting.invert?"1.-":""}texture2D(texture04, vTextureCoord).${data.a.selectedChannel};
+
+                ${data.r.setting.white? data.r.setting.invert?"r=0.;":"r=1.;" :""}
+                ${data.g.setting.white? data.g.setting.invert?"g=0.;":"g=1.;" :""}
+                ${data.b.setting.white? data.b.setting.invert?"b=0.;":"b=1.;" :""}
+                ${data.a.setting.white? data.a.setting.invert?"a=0.;":"a=1.;" :""}
+
                 gl_FragColor = vec4(r, g, b, a);
             }`
         )

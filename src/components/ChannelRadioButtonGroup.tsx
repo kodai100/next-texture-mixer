@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import { RadioButton } from '~/components/RadioButton';
-import { Channel } from '~/lib/WebGLUtil';
+import { RadioButton } from '~/components/ChannelRadioButton';
+import { Channel } from '~/constants/DataStructure';
 
 type Props = {
     onSelected: (channel: Channel) => void;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Channel } from '~/lib/WebGLUtil';
+import { Channel } from '~/constants/DataStructure';
 
 type Props = {
     channel: Channel;
@@ -40,8 +40,10 @@ const Container = styled.div<{selected: boolean}>`
     justify-content: center;
     align-items: center;
 
-    width: 37.5px;
-    height: 37.5px;
+    width: 36px;
+    height: 36px;
 
     cursor: pointer;
+
+    border: 1px #666 dashed;
 `;

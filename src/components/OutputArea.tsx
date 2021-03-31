@@ -1,7 +1,7 @@
 import React, { createRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { ImageProcess } from '~/lib/ImageProcess';
-import { Channel, Data } from '~/lib/WebGLUtil';
+import { Data } from '~/constants/DataStructure';
 import { TextButton } from './TextButton';
 
 type Props = {
@@ -23,7 +23,8 @@ export const OutputArea = (props: Props) => {
             const imageProcess = new ImageProcess(canvasRef.current);
 
             imageProcess.draw(props.data);
-
+            
+            console.log(props.data);
         }
 
     }, [props.execute]);
