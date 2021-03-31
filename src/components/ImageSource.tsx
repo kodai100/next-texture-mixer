@@ -114,7 +114,7 @@ const DropArea = styled.div<{dragOver: boolean, imageBlobUrl: string}>`
     width: 150px;
     height : 150px;
 
-    background-size: cover;
+    background-size: 100% 100%;
     background-repeat: no-repeat;
 
     cursor: pointer;
