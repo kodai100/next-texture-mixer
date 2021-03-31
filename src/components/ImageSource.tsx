@@ -2,24 +2,17 @@ import React, { useState, createRef, DragEvent, useEffect, ChangeEvent } from 'r
 import styled from 'styled-components';
 
 type Props = {
-    name?: string;
-    clear: boolean;
+    label: string;
+    imageBlob: string;
     onSetImage: (blobURL: string) => void;
 }
 
 export const ImageSource = (props: Props) => {
 
-    const [imageBlob, setImageBlob] = useState("");
     const [isDragOver, setIsDragOver] = useState(false);
 
     const dropAreaRef = createRef<HTMLDivElement>();
     const inputRef = createRef<HTMLInputElement>();
-
-    useEffect(() => {
-        if(props.clear === true){
-            clear();
-        }
-    }, [props.clear]);
 
     const onDragOver = (e: DragEvent<HTMLDivElement>) => {
 
@@ -92,19 +85,13 @@ export const ImageSource = (props: Props) => {
         let blobURL = URL.createObjectURL(blob);
 
         props.onSetImage(blobURL);
-        setImageBlob(blobURL);
     }
-
-    const clear = () => {
-        setImageBlob("");
-    }
-
 
 
     return (
-        <DropArea ref={dropAreaRef} onDragOver={onDragOver} onDragLeave={onDragLeave} onDrop={onDrop} onClick={onClick} dragOver={isDragOver} imageBlobUrl={imageBlob}>
+        <DropArea ref={dropAreaRef} onDragOver={onDragOver} onDragLeave={onDragLeave} onDrop={onDrop} onClick={onClick} dragOver={isDragOver} imageBlobUrl={props.imageBlob}>
             <DropInside>
-                {props.name}
+                {props.label}
             </DropInside>
             <FileInput ref={inputRef} onChange={onChangeInput} type="file" accept="image/*"></FileInput>
         </DropArea>
@@ -126,11 +113,6 @@ const DropArea = styled.div<{dragOver: boolean, imageBlobUrl: string}>`
     text-align: center;
     width: 150px;
     height : 150px;
-
-    &:not(:first-child){
-        margin-top: 10px;
-    }
-    
 
     background-size: cover;
     background-repeat: no-repeat;
