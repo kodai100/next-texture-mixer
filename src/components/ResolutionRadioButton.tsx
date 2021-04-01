@@ -41,7 +41,7 @@ const Container = styled.div<{selected: boolean}>`
     align-items: center;
 
     width: 50px;
-    height: 23.4px;
+    height: 28.3px;
 
     cursor: pointer;
 

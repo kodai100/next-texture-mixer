@@ -10,7 +10,7 @@ type Props = {
 
 export const ResolutionRadioButtonGroup = (props: Props) => {
 
-    const [selected, setSelected] = useState<Resolution>("8192");
+    const [selected, setSelected] = useState<Resolution>("2048");
 
     useEffect(() => {
         props.onSelected(selected);
@@ -23,7 +23,6 @@ export const ResolutionRadioButtonGroup = (props: Props) => {
             <ResolutionRadioButton resolution="1024" selected={selected} onClick={(resolution)=>{setSelected(resolution)}}></ResolutionRadioButton>
             <ResolutionRadioButton resolution="2048" selected={selected} onClick={(resolution)=>{setSelected(resolution)}}></ResolutionRadioButton>
             <ResolutionRadioButton resolution="4096" selected={selected} onClick={(resolution)=>{setSelected(resolution)}}></ResolutionRadioButton>
-            <ResolutionRadioButton resolution="8192" selected={selected} onClick={(resolution)=>{setSelected(resolution)}}></ResolutionRadioButton>
         </Container>
     )
 

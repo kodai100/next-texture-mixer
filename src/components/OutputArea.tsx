@@ -15,7 +15,7 @@ export const OutputArea = (props: Props) => {
 
     const canvasRef = createRef<HTMLCanvasElement>();
 
-    const [resolution, setResolution] = useState<Resolution>("8192");
+    const [resolution, setResolution] = useState<Resolution>("2048");
 
     useEffect(() => {
 
