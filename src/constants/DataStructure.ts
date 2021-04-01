@@ -17,3 +17,5 @@ export type ImageSetting = {
     invert: boolean;
     white: boolean;
 }
+
+export type Resolution = "256" | "512" | "1024" | "2048" | "4096" | "8192"

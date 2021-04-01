@@ -1,23 +1,31 @@
 import * as WebGLUtil from "./WebGLUtil";
 import * as MinMatrix from "./MinMatrix";
-import { Data } from "~/constants/DataStructure";
+import { Data, Resolution } from "~/constants/DataStructure";
 
 export class ImageProcess {
 
     webglUtil: WebGLUtil.WebGLUtil;
     gl: WebGLRenderingContext;
+    width: number;
+    height: number;
 
-    constructor(public canvas: HTMLCanvasElement){
+    constructor(public canvas: HTMLCanvasElement, resolution: Resolution){
 
         // must be defined before get context
-        canvas.width = 2048;
-        canvas.height = 2048;
+        this.width = parseInt(resolution);
+        this.height = parseInt(resolution);
 
+        canvas.width = this.width;
+        canvas.height = this.height;
+        
         this.gl = <WebGLRenderingContext> canvas.getContext('webgl', {preserveDrawingBuffer: true});
+        
         this.webglUtil = new WebGLUtil.WebGLUtil(this.gl);
     }
 
     draw = (data: Data) => {
+
+        this.gl.viewport(0, 0, this.width, this.height);
 
         this.gl.clearColor(0.0, 0.0, 0.0, 0.0);
         this.gl.disable(this.gl.DEPTH_TEST);

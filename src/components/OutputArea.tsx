@@ -1,8 +1,9 @@
-import React, { createRef, useEffect } from 'react';
+import React, { createRef, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { ImageProcess } from '~/lib/ImageProcess';
-import { Data } from '~/constants/DataStructure';
+import { Data, Resolution } from '~/constants/DataStructure';
 import { TextButton } from './TextButton';
+import { ResolutionRadioButtonGroup } from './ResolutionRadioButtonGroup.1';
 
 type Props = {
     className?: string;
@@ -14,13 +15,15 @@ export const OutputArea = (props: Props) => {
 
     const canvasRef = createRef<HTMLCanvasElement>();
 
+    const [resolution, setResolution] = useState<Resolution>("8192");
+
     useEffect(() => {
 
         console.log('call');
 
         if(canvasRef.current != undefined){
 
-            const imageProcess = new ImageProcess(canvasRef.current);
+            const imageProcess = new ImageProcess(canvasRef.current, resolution);
 
             imageProcess.draw(props.data);
             
@@ -28,6 +31,10 @@ export const OutputArea = (props: Props) => {
         }
 
     }, [props.execute]);
+
+    const onResolutionSelected = (resolution: Resolution) => {
+        setResolution(resolution);
+    }
 
     const onDownload = () => {
 
@@ -52,10 +59,13 @@ export const OutputArea = (props: Props) => {
 
     return (
         <div>
-            <Container className={props.className}>
-                <OutputCanvas ref={canvasRef} />
-                <OverlayText>Output</OverlayText>
-            </Container>
+            <FlexBox>
+                <Container className={props.className}>
+                    <OutputCanvas ref={canvasRef} />
+                    <OverlayText>Output</OverlayText>
+                </Container>
+                <ResolutionRadioButtonGroup onSelected={(res) => {onResolutionSelected(res)}}></ResolutionRadioButtonGroup>
+            </FlexBox>
             <DownloadButton label="Download" onClick={() => { onDownload() }}></DownloadButton>
         </div>
         
@@ -64,8 +74,15 @@ export const OutputArea = (props: Props) => {
 }
 
 
+const FlexBox = styled.div`
+    display: flex;
+    flex-direction: row;
+`;
+
 const Container = styled.div`
     position: relative;
+    width: 150px;
+    height : 150px;
 `;
 
 const OutputCanvas = styled.canvas`
@@ -74,8 +91,10 @@ const OutputCanvas = styled.canvas`
     font-size: 18px;
     font-weight: bold;
     text-align: center;
-    width: 150px;
-    height : 150px;
+
+    width:100%;
+    height:100;
+    
     z-index: 1;
 `;
 

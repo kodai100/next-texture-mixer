@@ -42,7 +42,7 @@ export default class MyDocument extends Document {
             <Html lang="ja">
                 <Head>
                     <link rel="shortcut icon" href="/favicon.ico" />
-                    <title>Kodai Takao Portfolio Website</title>
+                    <title>Texture Mixer</title>
                     <meta charSet="utf-8" />
 
                     {/* <meta name="description" content="A CG Director and Full Stack Engineer based in TOKYO."></meta>
